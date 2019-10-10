@@ -3,6 +3,7 @@ package com.pdelho.lastminute.taxes.controllers;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,9 +13,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.pdelho.lastminute.taxes.enumerations.ProductType;
 import com.pdelho.lastminute.taxes.model.ProductForm;
+import com.pdelho.lastminute.taxes.model.Receipt;
+import com.pdelho.lastminute.taxes.service.TaxesService;
 
 @Controller
 public class TaxesController {
+	
+	@Autowired
+	TaxesService taxesService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String showRegister(Model model) {
@@ -41,7 +47,8 @@ public class TaxesController {
             return "error";
         }
 
-		model.addAttribute("test", "Hola");
+        Receipt receipt = taxesService.calculateTaxes(productForm.getProducts());
+        
 		return "receipt";
 
 	}
