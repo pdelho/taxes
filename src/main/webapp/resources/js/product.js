@@ -1,4 +1,6 @@
 $( document ).ready(function() {
+	
+	$("#productCount").val(1);
 
 	$( "#addProduct" ).click(function() 
 	{
@@ -30,11 +32,12 @@ $( document ).ready(function() {
 	
 	function newProductContent (productNumber)
 	{
+		var productNumberNonZeroIndex = +productNumber + 1;
 		// Harcoding the tag (consider AJAX, warning if new type of product!!!)
 		return "\n	<hr>" +
 				"\n	<div class=\"row\">" +
 				"\t		<div class=\"product\">" +
-				"\n\t		Product " + productNumber +
+				"\n\t		Product " + productNumberNonZeroIndex +
 				"\n    	</div>" +
 				"\n\t	<div class=\"col-25\">" +
 				"\n     	<label for=\"fname\">Quantity</label>" +
