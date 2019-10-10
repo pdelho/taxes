@@ -12,25 +12,25 @@
       <label for="fname">Quantity</label>
     </div>
     <div class="col-75">
-    	<form:input path="products[${productNumber}].quantity" name="products[${productNumber}].quantity" value="" />
+    	<form:input path="products[${productNumber}].quantity" name="products[${productNumber}].quantity" value="" placeholder="2"/>
 	</div>
     <div class="col-25">
 		<label for="fname">Description</label>
     </div>
     <div class="col-75">
-	    <form:input path="products[${productNumber}].description" name="products[${productNumber}].description" value="" />
+	    <form:input path="products[${productNumber}].description" name="products[${productNumber}].description" value="" placeholder="Chocolate bar" />
     </div>
     <div class="col-25">
 	    <label for="fname">Price</label>
 	</div>
 	<div class="col-75">
-		<form:input path="products[${productNumber}].price" name="products[${productNumber}].price" value="" />
+		<form:input path="products[${productNumber}].price" name="products[${productNumber}].price" value="" placeholder="2.49" />
 	</div>
 	<div class="col-25">
 		<label for="fname">Product Types</label>
 	</div>
 	<div class="col-75">
-		<form:select path="products[${productNumber}].productType" name="products[${productNumber}].productType" value="${productTypes[0]}" >
+		<form:select path="products[${productNumber}].productType" name="products[${productNumber}].productType" value="" placeholder="OTHER" >
 			<form:options items="${productTypes}" />
 		</form:select>
 	</div>
