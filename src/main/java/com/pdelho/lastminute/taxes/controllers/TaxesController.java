@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.pdelho.lastminute.taxes.constants.ControllerConstants;
 import com.pdelho.lastminute.taxes.enumerations.ProductType;
 import com.pdelho.lastminute.taxes.model.ProductForm;
 import com.pdelho.lastminute.taxes.model.Receipt;
@@ -24,7 +25,7 @@ public class TaxesController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String showRegister(Model model) {
-		return "index";
+		return ControllerConstants.Views.INDEX;
 	}
 	
 	@RequestMapping(value = "/receipt", method = RequestMethod.GET)
@@ -36,7 +37,7 @@ public class TaxesController {
 		model.addAttribute("productTypes", productTypes);
 		
 		
-		return "products";
+		return ControllerConstants.Views.PRODUCTS;
 
 	}
 	
@@ -44,12 +45,13 @@ public class TaxesController {
 	public String showReceipt (Model model, @ModelAttribute("productForm") ProductForm productForm, BindingResult result) {
         if (result.hasErrors())
         {
-            return "error";
+            return ControllerConstants.Views.ERROR;
         }
 
         Receipt receipt = taxesService.calculateTaxes(productForm.getProducts());
+        model.addAttribute(receipt);
         
-		return "receipt";
+		return ControllerConstants.Views.RECEIPT;
 
 	}
 
