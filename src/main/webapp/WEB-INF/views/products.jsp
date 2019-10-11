@@ -24,9 +24,9 @@ When I purchase items I receive a receipt which lists the name of all the items 
 
 <div class="container">
  	<spring:url value="/receipt" var="receipt" />
-	<input type="hidden" id="productsNumber" value="1"  />
         <form:form method="post" action="${receipt}" modelAttribute="productForm">
 			<input id="productCount" type="hidden" value="1">
+			<input id="productTypes" type="hidden" value="${productTypes}">
 			<!-- Product row -->
 			<tags:product productNumber="0"/>
 			

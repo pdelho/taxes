@@ -33,7 +33,7 @@ $( document ).ready(function() {
 	function newProductContent (productNumber)
 	{
 		var productNumberNonZeroIndex = +productNumber + 1;
-		// Harcoding the tag (consider AJAX, warning if new type of product!!!)
+		getProductTypes();
 		return "\n	<hr>" +
 				"\n	<div class=\"row\">" +
 				"\t		<div class=\"product\">" +
@@ -62,7 +62,7 @@ $( document ).ready(function() {
 				"\n\t	</div>" +
 				"\n\t	<div class=\"col-75\">" +
 				"\n\t\t		<select id=\"products" + productNumber + ".productType\" name=\"products[" + productNumber + "].productType\" placeholder=\"OTHER\">" +
-				"\n\t\t\t		<option value=\"OTHER\">OTHER</option><option value=\"BOOK\">BOOK</option><option value=\"FOOD\">FOOD</option><option value=\"MEDICAL\">MEDICAL</option>" +
+				"\n\t\t\t" 		+ getProductTypes()	+ 
 				"\n\t\t		</select>" +
 				"\n\t	</div>" +
 				"\n\t	<div class=\"col-25\">" +
@@ -72,6 +72,19 @@ $( document ).ready(function() {
 				"\n\t\t		<input id=\"products" + productNumber + ".imported" + productNumber + "\" name=\"products[" + productNumber + "].imported\" type=\"checkbox\" value=\"true\"><input type=\"hidden\" name=\"_products[" + productNumber + "].imported\" value=\"on\"> <span>Check if product is imported</span>" +
 				"\n\t	</div>" +
 				"\n		</div>"
+	}
+	
+	function getProductTypes()
+	{
+		var typessHTML = "";
+		var types = $("#productTypes").val().split(",");
+		types.forEach(function(type) {
+			type = type.replace("[","");
+			type = type.replace("]","");
+			type = type.trim();
+			typessHTML = typessHTML + "<option value=\"" + type + "\">" + type + "</option>"
+		});
+		return typessHTML;
 	}
 
 });
