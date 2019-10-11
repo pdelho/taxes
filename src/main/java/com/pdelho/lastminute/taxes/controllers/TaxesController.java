@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,9 +30,11 @@ public class TaxesController {
 	}
 	
 	@RequestMapping(value = "/receipt", method = RequestMethod.GET)
-	public String showProductsForm(Model model) {
-		
-		final ProductForm productForm = new ProductForm();
+	public String showProductsForm(Model model, ProductForm productForm) {
+		if(productForm == null)
+		{
+			productForm = new ProductForm();
+		}
 		model.addAttribute("productForm", productForm);
 		final List<ProductType> productTypes = Arrays.asList(ProductType.values());
 		model.addAttribute("productTypes", productTypes);
@@ -42,10 +45,10 @@ public class TaxesController {
 	}
 	
 	@RequestMapping(value = "/receipt", method = RequestMethod.POST)
-	public String showReceipt (Model model, @ModelAttribute("productForm") ProductForm productForm, BindingResult result) {
+	public String showReceipt (Model model, @Validated @ModelAttribute("productForm") ProductForm productForm, BindingResult result) {
         if (result.hasErrors())
         {
-            return ControllerConstants.Views.ERROR;
+            return showProductsForm(model, productForm);
         }
 
         Receipt receipt = taxesService.calculateTaxes(productForm.getProducts());

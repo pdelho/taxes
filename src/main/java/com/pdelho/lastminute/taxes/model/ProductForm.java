@@ -2,8 +2,11 @@ package com.pdelho.lastminute.taxes.model;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 public class ProductForm {
 	
+	@Valid
 	private List<Product> products;
 	
 	/**

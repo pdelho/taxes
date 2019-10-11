@@ -2,6 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
@@ -28,12 +29,29 @@ Input the price per unit
 <div class="container">
  	<spring:url value="/receipt" var="receipt" />
         <form:form method="post" action="${receipt}" modelAttribute="productForm">
-			<input id="productCount" type="hidden" value="1">
 			<input id="productTypes" type="hidden" value="${productTypes}">
-			<!-- Product row -->
-			<div class="row">
-				<tags:product productNumber="0" isReceipt="false"/>
-			</div>
+			<c:choose>
+				
+				<c:when test="${productForm.products eq null}">
+					<!-- First product -->
+					<input id="productCount" type="hidden" value="1">
+					<!-- Product row -->
+					<div class="row">
+						<tags:product productNumber="0" isReceipt="false"/>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<input id="productCount" type="hidden" value="${fn:length(productForm.products)+1}">
+					<c:forEach items="${productForm.products}" var="product" varStatus="productCount">
+						<div class="row">
+							<c:if test="${not (productCount.index eq 0)}"><hr></c:if>
+							<tags:product productNumber="${productCount.index}" isReceipt="false"></tags:product>
+						</div>
+					</c:forEach>
+				</c:otherwise>
+			
+			</c:choose>
+			
 			
 			<div id ="productsEnd"></div>
 			

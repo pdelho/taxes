@@ -1,6 +1,4 @@
 $( document ).ready(function() {
-	
-	$("#productCount").val(1);
 
 	$( "#addProduct" ).click(function() 
 	{

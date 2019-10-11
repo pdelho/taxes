@@ -116,6 +116,10 @@ input[type=submit]:hover {
 	padding: 10px;
 }
 
+.error {
+	color:red;
+}
+
 /* Clear floats after the columns */
 .row:after {
 	content: "";

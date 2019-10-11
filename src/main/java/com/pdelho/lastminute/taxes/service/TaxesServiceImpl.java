@@ -31,9 +31,9 @@ public class TaxesServiceImpl implements TaxesService {
 		{
 			
 			Float tax = this.calculateTax(product);		
-			Float totalProductPrice = product.getQuantity() * product.getPrice() + tax;
+			Float totalProductPrice = Integer.parseInt(product.getQuantity()) * Float.valueOf(product.getPrice()) + tax;
 			
-			product.setPrice(this.correctPrecission(totalProductPrice));
+			product.setPrice(this.correctPrecission(totalProductPrice).toString());
 			
 			// Update the receipt
 			productsReceipt.add(product);
@@ -77,7 +77,7 @@ public class TaxesServiceImpl implements TaxesService {
 		}
 		
 		// Attention: the tax is rounded after calculating the total price (units times price), not each time for a product
-		totalTax = unitaryTax * product.getQuantity() * product.getPrice();
+		totalTax = unitaryTax * Integer.parseInt(product.getQuantity()) * Float.valueOf(product.getPrice());
 		
 		// The rounding rules for sales tax are that for a tax rate of n%, a shelf price of p contains (np/100 rounded up to the nearest 0.05
 		totalTax = (float) (Math.ceil((totalTax / TaxesConstants.ROUNDED_FACTOR)) * TaxesConstants.ROUNDED_FACTOR);

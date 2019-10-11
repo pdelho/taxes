@@ -12,12 +12,14 @@
       <label for="fname">Quantity</label>
     </div>
     <div class="col-75">
+    	<form:errors path="products[${productNumber}].quantity" cssClass="error"/>
     	<form:input path="products[${productNumber}].quantity" name="products[${productNumber}].quantity" value="" placeholder="2" readonly="${isReceipt}" disabled ="${isReceipt}"/>
 	</div>
     <div class="col-25">
 		<label for="fname">Description</label>
     </div>
     <div class="col-75">
+    	<form:errors path="products[${productNumber}].description" cssClass="error"/>
 	    <form:input path="products[${productNumber}].description" name="products[${productNumber}].description" value="" placeholder="Chocolate bar" readonly="${isReceipt}" disabled ="${isReceipt}"/>
     </div>
     <div class="col-25">
@@ -32,10 +34,11 @@
 	   
 	</div>
 	<div class="col-75">
+		<form:errors path="products[${productNumber}].price" cssClass="error"/>
 		<form:input path="products[${productNumber}].price" name="products[${productNumber}].price" value="" placeholder="2.49" readonly="${isReceipt}" disabled ="${isReceipt}"/>
 	</div>
 	<div class="col-25">
-		<label for="fname">Product Types</label>
+		<label for="fname">Product Type</label>
 	</div>
 	<div class="col-75">
 		<form:select path="products[${productNumber}].productType" name="products[${productNumber}].productType" value="" placeholder="OTHER" readonly="${isReceipt}" disabled ="${isReceipt}">
