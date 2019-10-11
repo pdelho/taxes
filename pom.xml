@@ -4,7 +4,7 @@
 	<groupId>com.delho.lastminute</groupId>
 	<artifactId>taxes</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>taxes Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
@@ -99,5 +99,13 @@
 	</dependencies>
 	<build>
 		<finalName>taxes</finalName>
+		<plugins>
+			<plugin>
+				<groupId>com.heroku.sdk</groupId>
+				<artifactId>heroku-maven-plugin</artifactId>
+				<version>1.1.2</version>
+			</plugin>
+		</plugins>
+		
 	</build>
 </project>
