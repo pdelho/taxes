@@ -12,7 +12,8 @@ public class Product {
 	
 	// Positive number
 	@NotNull(message = "Enter a quantity")
-	@Digits(integer=10, fraction=0 ,message="Enter a positive integer number")
+	@Digits(integer=10, fraction=0 ,message="Number must be an integer")
+	@Min(value=1, message = "Number must be positive")
 	private String quantity;
 	
 	@NotBlank(message = "Include a description")
