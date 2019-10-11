@@ -17,7 +17,7 @@
 		<br>
 		Check the project details <a href="https://github.com/pdelho/taxes">here</a>.
 		<br>
-		Check the last status of the app <a href="https://travis-ci.org/pdelho/taxes"></a>
+		Check the last <a href="https://travis-ci.org/pdelho/taxes">status of the app</a>
 	</div>
 </body>
 
