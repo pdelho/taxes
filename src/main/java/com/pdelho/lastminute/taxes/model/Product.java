@@ -6,7 +6,7 @@ public class Product {
 	
 	private Integer quantity;
 	private String description;
-	private Double price;
+	private Float price;
 	private ProductType productType;
 	private boolean isImported;
 	
@@ -27,11 +27,11 @@ public class Product {
 		this.description = description;
 	}
 	
-	public Double getPrice() {
+	public Float getPrice() {
 		return price;
 	}
 	
-	public void setPrice(Double price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 	
@@ -49,6 +49,12 @@ public class Product {
 	
 	public void setImported(boolean isImported) {
 		this.isImported = isImported;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return quantity + " product(s) " + description + " with a price of: " + price;
 	}
 
 }

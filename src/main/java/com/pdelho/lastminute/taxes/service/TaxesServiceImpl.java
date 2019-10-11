@@ -1,5 +1,7 @@
 package com.pdelho.lastminute.taxes.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,30 +25,32 @@ public class TaxesServiceImpl implements TaxesService {
 
 		Receipt receipt = new Receipt();
 		List<Product> productsReceipt = new ArrayList<Product>();
-		Double taxes = 0.0;
-		Double totalPrice = 0.0;
+		Float taxes = 0f;
+		Float totalPrice = 0f;
 		for (Product product : products)
 		{
-			Double tax = this.calculateTax(product);	
-			Double totalProductPrice = product.getQuantity() * product.getPrice() + tax;
-			product.setPrice(totalProductPrice);
+			
+			Float tax = this.calculateTax(product);		
+			Float totalProductPrice = product.getQuantity() * product.getPrice() + tax;
+			
+			product.setPrice(this.correctPrecission(totalProductPrice));
 			
 			// Update the receipt
 			productsReceipt.add(product);
 			taxes = taxes + tax;
-			totalPrice = totalPrice + totalProductPrice;
+			totalPrice = totalPrice + this.correctPrecission(totalProductPrice);
 		}
 		receipt.setProducts(productsReceipt);
-		receipt.setTaxes(taxes);
-		receipt.setTotalPrice(totalPrice);
+		receipt.setTaxes(this.correctPrecission(taxes));
+		receipt.setTotalPrice(this.correctPrecission(totalPrice));
 		
 		return receipt;
 	}
 	
-	protected Double calculateTax(final Product product)
+	protected Float calculateTax(final Product product)
 	{
-		Double totalTax = 0.0;
-		Double unitaryTax = 0.0;
+		Float totalTax = 0f;
+		Float unitaryTax = 0f;
 		
 		// Exempt (if not imported)
 		if (product.getProductType() == ProductType.BOOK || product.getProductType() == ProductType.FOOD
@@ -72,11 +76,24 @@ public class TaxesServiceImpl implements TaxesService {
 			LOG.debug("Product {} was not imported", product.getDescription());
 		}
 		
-		
-		totalTax = unitaryTax * product.getQuantity() * product.getPrice();
 		// Attention: the tax is rounded after calculating the total price (units times price), not each time for a product
-		totalTax = Math.round(totalTax * TaxesConstants.INVERSE_ROUNDED_FACTOR) / TaxesConstants.INVERSE_ROUNDED_FACTOR;
-		return totalTax;
+		totalTax = unitaryTax * product.getQuantity() * product.getPrice();
+		
+		// The rounding rules for sales tax are that for a tax rate of n%, a shelf price of p contains (np/100 rounded up to the nearest 0.05
+		totalTax = (float) (Math.ceil((totalTax / TaxesConstants.ROUNDED_FACTOR)) * TaxesConstants.ROUNDED_FACTOR);
+		// totalTax = Math.round(totalTax * TaxesConstants.INVERSE_ROUNDED_FACTOR) / TaxesConstants.INVERSE_ROUNDED_FACTOR;
+		
+		// Warning, lost of internal precission in Java
+		
+		return this.correctPrecission(totalTax);
+	}
+	
+	protected Float correctPrecission (Float decimal)
+	{
+		// Correct precission using BigDecimal
+		BigDecimal totalTaxBD= new BigDecimal(decimal);
+		totalTaxBD = totalTaxBD.setScale(2, RoundingMode.HALF_UP);
+		return totalTaxBD.floatValue();
 	}
 
 	
