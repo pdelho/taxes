@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +33,8 @@ public class TaxesServiceImpl implements TaxesService {
 			
 			Float tax = this.calculateTax(product);		
 			Float totalProductPrice = Integer.parseInt(product.getQuantity()) * Float.valueOf(product.getPrice()) + tax;
-			
-			product.setPrice(this.correctPrecission(totalProductPrice).toString());
+			// Format with root locale and two decimals dot separator
+			product.setPrice(String.format(Locale.ROOT, TaxesConstants.DECIMAL_FORMAT,this.correctPrecission(totalProductPrice)));
 			
 			// Update the receipt
 			productsReceipt.add(product);
@@ -41,8 +42,8 @@ public class TaxesServiceImpl implements TaxesService {
 			totalPrice = totalPrice + this.correctPrecission(totalProductPrice);
 		}
 		receipt.setProducts(productsReceipt);
-		receipt.setTaxes(this.correctPrecission(taxes));
-		receipt.setTotalPrice(this.correctPrecission(totalPrice));
+		receipt.setTaxes(String.format(Locale.ROOT, TaxesConstants.DECIMAL_FORMAT, this.correctPrecission(taxes)));
+		receipt.setTotalPrice(String.format(Locale.ROOT, TaxesConstants.DECIMAL_FORMAT, this.correctPrecission(totalPrice)));
 		
 		return receipt;
 	}

@@ -5,8 +5,8 @@ import java.util.List;
 public class Receipt {
 	
 	private List<Product> products;
-	private Float taxes;
-	private Float totalPrice;
+	private String taxes;
+	private String totalPrice;
 	
 	
 	public List<Product> getProducts() {
@@ -17,19 +17,19 @@ public class Receipt {
 		this.products = products;
 	}
 	
-	public Float getTaxes() {
+	public String getTaxes() {
 		return taxes;
 	}
 	
-	public void setTaxes(Float taxes) {
+	public void setTaxes(String taxes) {
 		this.taxes = taxes;
 	}
 	
-	public Float getTotalPrice() {
+	public String getTotalPrice() {
 		return totalPrice;
 	}
 	
-	public void setTotalPrice(Float totalPrice) {
+	public void setTotalPrice(String totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 	
